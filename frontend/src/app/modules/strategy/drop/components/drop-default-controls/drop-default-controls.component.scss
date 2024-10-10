@@ -1,0 +1,12 @@
+:host {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.control {
+    max-width: 260px;
+    margin-left: 24px;
+    padding-bottom: 8px;
+}

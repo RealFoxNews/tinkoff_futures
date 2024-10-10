@@ -1,0 +1,74 @@
+<nz-switch
+    [ngModel]="settings | isDropEnabled: exchange"
+    [nzCheckedChildren]="checkedTemplate"
+    [nzUnCheckedChildren]="unCheckedTemplate"
+    class="enabled"
+    (ngModelChange)="onEnabledChange($event)"
+></nz-switch>
+<ng-template #checkedTemplate><span nz-icon nzType="check"></span></ng-template>
+<ng-template #unCheckedTemplate><span nz-icon nzType="close"></span></ng-template>
+
+<nz-input-group class="control" [nzSuffix]="suffixPercent">
+    <input
+        #inputItem
+        nz-input
+        [formControl]="defaulPercentControl"
+        type="number"
+        min="0"
+        step="0.01"
+        (blur)="onDefaulPercentChange()"
+    />
+</nz-input-group>
+
+<ng-template #suffixPercent> % </ng-template>
+
+<nz-input-group class="control" [nzSuffix]="suffixDeltaPercent">
+    <input
+        #inputItem
+        nz-input
+        [formControl]="defaultDiffBuyControl"
+        type="number"
+        min="0"
+        step="0.01"
+        (blur)="onDefaulDeltaPercentChange()"
+    />
+</nz-input-group>
+
+<ng-template #suffixDeltaPercent> Δ% </ng-template>
+
+<nz-input-group class="control" [nzSuffix]="suffixMoney">
+    <input
+        #inputItem
+        nz-input
+        [formControl]="defaultMoneyControl"
+        type="number"
+        min="0"
+        (blur)="onDefaultMoneyChange()"
+    />
+</nz-input-group>
+
+<ng-template #suffixMoney> {{ exchange.includes('FORTS_EVENING') ? '₽' : '$' }}</ng-template>
+
+<ng-container *ngIf="exchange === 'SPB'">
+    <label
+        class="control"
+        nz-checkbox
+        [nzChecked]="settings?.includeMS"
+        (nzCheckedChange)="paramsChange($event, 'includeMS')"
+        >ОС</label
+    >
+    <label
+        class="control"
+        nz-checkbox
+        [nzChecked]="settings?.includeReports"
+        (nzCheckedChange)="paramsChange($event, 'includeReports')"
+        >Отчеты</label
+    >
+    <label
+        class="control"
+        nz-checkbox
+        [nzChecked]="settings?.includeFarma"
+        (nzCheckedChange)="paramsChange($event, 'includeFarma')"
+        >Фарма</label
+    >
+</ng-container>

@@ -1,0 +1,111 @@
+<app-drop-default-controls
+    [exchange]="exchange"
+    [settings]="settings"
+    (settingsChanged)="settings = $event"
+></app-drop-default-controls>
+
+<div class="container" resizeObserver (resize)="onResize($event)">
+    <nz-table
+        #virtualTable
+        [nzVirtualItemSize]="24"
+        [nzBordered]="true"
+        [nzData]="sharesToDisplay"
+        [nzFrontPagination]="false"
+        [nzShowPagination]="false"
+        [nzScroll]="{ x: width, y: height }"
+    >
+        <thead class="sticky">
+            <tr>
+                <th nzWidth="64px"></th>
+                <th nzWidth="200px">
+                    <nz-input-group [nzSuffix]="suffixTemplate">
+                        <input nz-input placeholder="Тикер" [(ngModel)]="tikerFilter" (input)="onTikerFilterChange()" />
+                    </nz-input-group>
+                    <ng-template #suffixTemplate>
+                        <span
+                            *ngIf="tikerFilter"
+                            nz-icon
+                            nzTheme="fill"
+                            nzType="close-circle"
+                            (click)="onTikerFilterClear()"
+                        ></span>
+                    </ng-template>
+                </th>
+                <th nzWidth="200px">Биржа</th>
+                <th nzWidth="200px">Процент</th>
+                <th nzWidth="200px">Процент от минимума</th>
+                <th nzWidth="200px">Сумма</th>
+                <th nzWidth="64px"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-template nz-virtual-scroll let-data let-index="index">
+                <tr>
+                    <td nzWidth="64px">
+                        <label
+                            nz-checkbox
+                            [nzChecked]="data | shareIsExcept : settings"
+                            (nzCheckedChange)="toggleShareExcept($event, data)"
+                        ></label>
+                    </td>
+                    <td nzWidth="200px">{{ data.ticker }} - {{ data.name }}</td>
+                    <td nzWidth="200px">{{ data.exchange }}</td>
+                    <td nzWidth="200px" (dblclick)="startEditPercent(data)">
+                        <nz-input-group class="control" *ngIf="data.figi === percentEdit; else diffDrop">
+                            <input #percentInput nz-input [formControl]="percentControl" type="number" min="0" />
+                        </nz-input-group>
+
+                        <ng-template #diffDrop>
+                            <span>
+                                {{ data | percentValue : settings }}
+                            </span>
+                        </ng-template>
+                    </td>
+
+                    <td nzWidth="200px" (dblclick)="startEditDeltaDiffBuy(data)">
+                        <nz-input-group class="control" *ngIf="data.figi === deltaBuyDiffEdit; else diffDeltaDrop">
+                            <input
+                                #deltaInput
+                                nz-input
+                                [formControl]="deltaBuyDiffControl"
+                                type="number"
+                                min="0"
+                                step="0.01"
+                            />
+                        </nz-input-group>
+
+                        <ng-template #diffDeltaDrop>
+                            <span>
+                                {{ data | deltaDiffValue : settings }}
+                            </span>
+                        </ng-template>
+                    </td>
+
+                    <td nzWidth="200px" (dblclick)="startEditMoney(data)">
+                        <nz-input-group class="control" *ngIf="data.figi === moneyEdit; else maxMoney">
+                            <input #moneyInput nz-input [formControl]="moneyControl" type="number" min="0" />
+                        </nz-input-group>
+
+                        <ng-template #maxMoney>
+                            <span>
+                                {{ data | moneyValue : settings }}
+                            </span>
+                        </ng-template>
+                    </td>
+
+                    <td nzWidth="64px">
+                        <button
+                            *ngIf="data | shareHasCutomSettings : settings"
+                            nz-button
+                            nzType="default"
+                            nzShape="circle"
+                            (click)="clear(data)"
+                        >
+                            <span nz-icon nzType="reload" nzTheme="outline"></span>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </tbody>
+    </nz-table>
+</div>

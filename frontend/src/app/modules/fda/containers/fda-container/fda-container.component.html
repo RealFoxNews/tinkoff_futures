@@ -1,0 +1,15 @@
+<nz-date-picker
+  nzMode="month"
+  [nzFormat]="'MM.YYYY'"
+  [nzDisabledDate]="disabledMonths"
+  [(ngModel)]="date"
+  (ngModelChange)="onDateChange($event)"
+></nz-date-picker>
+
+<nz-calendar [(ngModel)]="date">
+  <app-fda-calendar-cell
+    *nzDateCell="let date"
+    [fdaData]="data"
+    [date]="date"
+  ></app-fda-calendar-cell>
+</nz-calendar>

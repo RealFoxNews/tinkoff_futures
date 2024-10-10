@@ -1,0 +1,35 @@
+<nz-table #colSpanTable [nzData]="dataToDisplay" nzBordered [nzSize]="'small'">
+  <thead>
+    <tr>
+      <th>Тикер</th>
+      <th>Название</th>
+      <th>Статус</th>
+      <th>Препарат</th>
+      <th>Описание</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let item of colSpanTable.data">
+      <tr
+        *ngFor="let company of item.data.companies; index as i"
+        (dblclick)="copyTiker(company.exchange[0].symbol)"
+      >
+        <td>{{ company.exchange[0].symbol }}</td>
+        <td>{{ company.name }}</td>
+        <ng-container *ngIf="i === 0">
+          <td [attr.rowspan]="item.data.companies.length">
+            {{ item.data.status }}
+          </td>
+          <td [attr.rowspan]="item.data.companies.length">
+            {{ item.data.drugName }}
+          </td>
+          <td [attr.rowspan]="item.data.companies.length" class="notes">
+            <a [attr.href]="item.data.source_link" target="_blank">
+              {{ item.data.notes }}</a
+            >
+          </td>
+        </ng-container>
+      </tr>
+    </ng-container>
+  </tbody>
+</nz-table>

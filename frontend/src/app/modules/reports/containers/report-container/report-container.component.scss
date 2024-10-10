@@ -1,0 +1,48 @@
+@import "../../../../../styles/colors.scss";
+
+app-report-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  padding-bottom: 16px;
+  .date-picker {
+    max-width: 240px;
+    width: 100%;
+  }
+}
+
+.table-container {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+
+  .ant-table-thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+}
+
+.bold {
+  font-weight: 600;
+}
+.error {
+  color: $error;
+}
+.success {
+  color: $success;
+}
+.warn {
+  color: $warn;
+}
+
+.stiky {
+  position: sticky;
+  left: 0;
+}

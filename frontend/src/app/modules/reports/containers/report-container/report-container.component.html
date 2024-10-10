@@ -1,0 +1,49 @@
+<div class="header">
+  <nz-date-picker
+    [formControl]="date"
+    [nzFormat]="'dd.MM.YYYY'"
+    [nzDisabledDate]="disableWeekends"
+    class="date-picker"
+    placeholder="Отчеты за"
+  ></nz-date-picker>
+</div>
+
+<div class="table-container">
+  <nz-table
+    #table
+    [nzData]="rows"
+    [nzBordered]="true"
+    [nzFrontPagination]="false"
+    [nzShowPagination]="false"
+  >
+    <thead>
+      <tr>
+        <th nzLeft class="stiky">Тикер</th>
+        <th>Компания</th>
+        <th>Время</th>
+        <th>Ожидания по цене за акцию</th>
+        <th>Ожидания по выручке</th>
+        <th>Ожидаемый рост выручки, %</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of table.data" (dblclick)="copyTiker(item)">
+        <td nzLeft class="bold stiky">{{ item.ticker }}</td>
+        <td>{{ item.company }}</td>
+        <td>{{ item._time | moment: "HH:mm" }}</td>
+        <td>{{ item.estimate }}</td>
+        <td>{{ item.revest }}</td>
+        <td
+          class="bold"
+          [ngClass]="{
+            error: item._revgrowthprint && item._revgrowthprint < 15,
+            warn: item._revgrowthprint && item._revgrowthprint > 100,
+            success: item._revgrowthprint && item._revgrowthprint > 15
+          }"
+        >
+          {{ item._revgrowthprint }}
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

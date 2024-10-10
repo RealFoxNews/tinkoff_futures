@@ -1,0 +1,49 @@
+<div class="header" [formGroup]="form">
+  <nz-date-picker
+    formControlName="from"
+    [nzFormat]="'dd.MM.YYYY'"
+    [nzDisabledDate]="disableWeekends"
+    class="date-picker start"
+  ></nz-date-picker>
+
+  <nz-date-picker
+    formControlName="to"
+    [nzFormat]="'dd.MM.YYYY'"
+    [nzDisabledDate]="disableByTwoWeeks(form)"
+    [nzDisabled]="!form.get('from').value"
+    class="date-picker end"
+  ></nz-date-picker>
+
+  <nz-spin nzSimple class="spin" *ngIf="isWaiting"></nz-spin>
+</div>
+
+<div class="table-container">
+  <nz-table
+    #table
+    [nzData]="rows"
+    [nzBordered]="true"
+    [nzFrontPagination]="false"
+    [nzShowPagination]="false"
+  >
+    <thead>
+      <tr>
+        <th nzLeft class="stiky">Тикер</th>
+        <th>Компания</th>
+        <th>Купить до</th>
+        <th>Дата выплаты</th>
+        <th>Дата записи в реестре</th>
+        <th>Размер, $</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of table.data" (dblclick)="copyTiker(item)">
+        <td nzLeft class="bold stiky">{{ item.symbol }}</td>
+        <td nzLeft class="bold stiky">{{ item.companyName }}</td>
+        <td>{{ item.dividend_Ex_Date | dividendsDate }}</td>
+        <td>{{ item.payment_Date | dividendsDate }}</td>
+        <td>{{ item.record_Date | dividendsDate }}</td>
+        <td>{{ item.dividend_Rate }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

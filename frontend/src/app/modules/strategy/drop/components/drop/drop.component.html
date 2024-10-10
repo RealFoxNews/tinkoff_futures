@@ -1,0 +1,36 @@
+<div class="stratagy-switcher">
+    <span class="label">
+        Стратегия
+        <span class="label-value"> {{ settings?.enabled ? 'включена' : 'выключена' }}</span>
+    </span>
+    <nz-switch
+        [ngModel]="settings?.enabled"
+        (ngModelChange)="onEnabledChange($event)"
+        [nzCheckedChildren]="checkedTemplate"
+        [nzUnCheckedChildren]="unCheckedTemplate"
+    >
+    </nz-switch>
+    <ng-template #checkedTemplate><span nz-icon nzType="check"></span></ng-template>
+    <ng-template #unCheckedTemplate><span nz-icon nzType="close"></span></ng-template>
+</div>
+
+<nz-tabset class="tabs">
+    <nz-tab nzTitle="FORTS_EVENING">
+        <drop-shares-table
+            [shares]="shares | shareExchange : 'FORTS_EVENING'"
+            [exchange]="'FORTS_EVENING'"
+            [settings]="settings"
+            (sharesSettingsChanged)="patchSharesSettings($event)"
+            (exceptSettingsChanged)="patchExceptSettings($event)"
+        ></drop-shares-table>
+    </nz-tab>
+    <nz-tab nzTitle="SPB">
+        <drop-shares-table
+            [exchange]="'SPB'"
+            [shares]="shares | shareExchange : 'SPB'"
+            [settings]="settings"
+            (sharesSettingsChanged)="patchSharesSettings($event)"
+            (exceptSettingsChanged)="patchExceptSettings($event)"
+        ></drop-shares-table>
+    </nz-tab>
+</nz-tabset>

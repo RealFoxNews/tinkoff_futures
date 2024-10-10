@@ -1,0 +1,51 @@
+<nz-steps [nzCurrent]="step" class="steper">
+    <nz-step nzTitle="Токен доступа"></nz-step>
+    <nz-step nzTitle="Выбор счета"> </nz-step>
+    <nz-step nzTitle="Телеграм-бот"> </nz-step>
+    <nz-step nzTitle="Готово"> </nz-step>
+</nz-steps>
+
+<form class="info-elements" nz-form [formGroup]="form" nzLayout="vertical">
+    <nz-form-item *ngIf="step === 0">
+        <nz-form-label [nzSpan]="8">Тинькофф токен полного доступа</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+            <input nz-input [formControlName]="'apiKey'" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="step === 1">
+        <nz-form-label [nzSpan]="8">Счет</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+            <nz-select [formControlName]="'accountId'">
+                <nz-option *ngFor="let account of accounts" [nzValue]="account.id" [nzLabel]="account.name"></nz-option>
+            </nz-select>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item *ngIf="step === 2">
+        <nz-form-label [nzSpan]="8">ID бота</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+            <input nz-input [formControlName]="'botId'" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="step === 2">
+        <nz-form-label [nzSpan]="8">ID чата</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+            <input nz-input [formControlName]="'chatId'" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <div *ngIf="step === 3" class="complete">Все данные введены</div>
+</form>
+
+<div class="action">
+    <button nz-button (click)="pre()" *ngIf="step > 0">
+        <span>Назад</span>
+    </button>
+    <button nz-button (click)="save()" *ngIf="step !== 3">
+        <span>Сохранить</span>
+    </button>
+
+    <button nz-button nzDanger (click)="clearData()" *ngIf="step === 3">
+        <span>Удалить настройки счета</span>
+    </button>
+</div>
