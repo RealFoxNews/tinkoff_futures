@@ -1,0 +1,34 @@
+{
+  "name": "NestJS and Angular Project",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "."
+  },
+  "containerEnv": {
+    "NODE_OPTIONS": "--openssl-legacy-provider"
+  },
+  "onCreateCommand": "npm install -g @angular/cli@latest @nestjs/cli@latest && cd frontend && node generate-env.js && npm install && npm install fernet-web && npm install --save-dev nodemon @types/estree @types/parse-json @types/jasmine @angular-devkit/build-angular webpack@latest && cd ../backend && npm install && npm install fernet-web && npm install --save-dev nodemon @nestjs/websockets@8.4.7 @nestjs/platform-socket.io@8.4.7 socket.io && echo 'Установка завершена успешно!'",
+  "waitFor": "onCreateCommand",
+  "postAttachCommand": "chmod +x ./start-projects.sh && ./start-projects.sh",
+  "remoteUser": "node",
+    "forwardPorts": [
+    8080,
+    11111,
+    4200
+  ],
+  "portsAttributes": {
+    "8080": {
+      "label": ""
+    },
+    "11111": {
+      "label": ""
+    },
+    "4200": {
+      "label": ""
+    }
+  },
+  "mounts": [
+    "source=${localWorkspaceFolder}/frontend,target=/home/node/frontend,type=bind,consistency=cached",
+    "source=${localWorkspaceFolder}/backend,target=/home/node/backend,type=bind,consistency=cached"
+  ]
+}
