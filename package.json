@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "fs-extra": "^11.2.0",
-    "javascript-obfuscator": "^4.1.1"
-  }
-}
