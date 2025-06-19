@@ -1,5 +1,5 @@
 # Используем официальный образ Node.js версии 18.20.0
-FROM node:20-bookworm  # Используем актуальную LTS-версию
+FROM node:22.16.0-bullsey  # Используем актуальную LTS-версию
 
 # Устанавливаем переменную окружения для OpenSSL
 ENV NODE_OPTIONS=--openssl-legacy-provider
