@@ -35,3 +35,6 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+/backend/assets/license.dll
+/backend/assets/license_public.pem
+/backend/assets/signature.bin

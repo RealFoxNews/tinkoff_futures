@@ -1,5 +1,5 @@
 # Используем официальный образ Node.js версии 18.20.0
-FROM node:18.20.0-bullseye
+FROM node:20.19
 
 # Устанавливаем переменную окружения для OpenSSL
 ENV NODE_OPTIONS=--openssl-legacy-provider
