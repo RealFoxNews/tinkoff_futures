@@ -3,6 +3,8 @@ const { join } = require('path');
 
 // Получаем переменную CODESPACE_NAME из окружения
 const codespaceName = process.env.CODESPACE_NAME;
+// Токен авторизации для приватных портов Codespaces
+const authToken = process.env.GITHUB_TOKEN || '';
 
 // Формируем содержимое файла environment.ts
 const targetPath = join(__dirname, 'src', 'environments', 'environment.ts');
@@ -12,6 +14,7 @@ export const environment = {
   production: false,
   apiUrl: '${codespaceName ? `https://${codespaceName}-11111.app.github.dev/` : 'http://localhost:11111/'}',
   socketUrl: '${codespaceName ? `wss://${codespaceName}-11111.app.github.dev/` : 'ws://localhost:11111/'}',
+  authToken: '${authToken}',
 };
 `;
 

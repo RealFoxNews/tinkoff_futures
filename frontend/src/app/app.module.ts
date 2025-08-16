@@ -1,5 +1,5 @@
 import { registerLocaleData } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import ru from '@angular/common/locales/ru';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 import { IconsProviderModule } from './icons-provider.module';
 import { DropModule } from './modules/strategy/drop/drop.module';
 import { CopyToClipBoardService } from './services/copy-to-clip-board.service';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 registerLocaleData(ru);
 
@@ -45,6 +46,7 @@ registerLocaleData(ru);
       },
     },
     AppSocketService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })
