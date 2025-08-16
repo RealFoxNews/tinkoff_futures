@@ -1,34 +1,22 @@
 {
   "name": "NestJS and Angular Project",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "context": "."
+  "build": { "dockerfile": "Dockerfile", "context": "." },
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
   },
-  "containerEnv": {
-    "NODE_OPTIONS": "--openssl-legacy-provider"
-  },
-  "onCreateCommand": "npm install -g @angular/cli@latest @nestjs/cli@latest && cd frontend && node generate-env.js && npm install && npm install fernet-web && npm install --save-dev nodemon @types/estree @types/parse-json @types/jasmine @angular-devkit/build-angular webpack@latest && cd ../backend && npm install && npm install fernet-web && npm install --save-dev nodemon @nestjs/websockets@8.4.7 @nestjs/platform-socket.io@8.4.7 socket.io && echo 'Установка завершена успешно!'",
-  "waitFor": "onCreateCommand",
-  "postAttachCommand": "chmod +x ./start-projects.sh && ./start-projects.sh",
+  "containerEnv": { "NODE_OPTIONS": "--openssl-legacy-provider" },
+
+  "containerUser": "node",
   "remoteUser": "node",
-    "forwardPorts": [
-    8080,
-    11111,
-    4200
-  ],
+
+  "forwardPorts": [4200, 8080, 11111],
   "portsAttributes": {
-    "8080": {
-      "label": ""
-    },
-    "11111": {
-      "label": ""
-    },
-    "4200": {
-      "label": ""
-    }
+    "4200": { "label": "frontend", "protocol": "https", "onAutoForward": "openBrowser" },
+    "8080": { "label": "backend",  "protocol": "https", "onAutoForward": "notify" },
+    "11111": { "label": "ws/api",  "protocol": "https", "onAutoForward": "notify" }
   },
-  "mounts": [
-    "source=${localWorkspaceFolder}/frontend,target=/home/node/frontend,type=bind,consistency=cached",
-    "source=${localWorkspaceFolder}/backend,target=/home/node/backend,type=bind,consistency=cached"
-  ]
+
+  "postCreateCommand": "bash .devcontainer/postCreate.sh",
+  "waitFor": "postCreateCommand",
+  "postAttachCommand": "bash .devcontainer/postAttach.sh"
 }
