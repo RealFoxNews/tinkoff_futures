@@ -8,10 +8,9 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = environment.authToken;
     if (token) {
+      const separator = req.url.includes('?') ? '&' : '?';
       const authReq = req.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`,
-        },
+        url: `${req.url}${separator}token=${token}`,
       });
       return next.handle(authReq);
     }
