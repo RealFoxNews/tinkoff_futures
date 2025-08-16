@@ -19,7 +19,7 @@ export class AppSocketService {
   openSocket() {
     console.log('openSocker entered');
     const token = environment.authToken;
-    const url = token ? `${environment.socketUrl}?tkn=${token}` : environment.socketUrl;
+    const url = token ? `${environment.socketUrl}?token=${token}` : environment.socketUrl;
     const socket = new WebSocket(url);
     this.socketMessages.next({ event: 'sync', data: false });
 
