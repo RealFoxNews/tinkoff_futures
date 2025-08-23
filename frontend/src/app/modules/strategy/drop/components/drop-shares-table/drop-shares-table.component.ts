@@ -30,14 +30,19 @@ export class DropSharesTableComponent implements OnInit {
     @ViewChild('moneyInput', { read: ElementRef }) moneyInput: ElementRef;
     @ViewChild('deltaInput', { read: ElementRef }) deltaInput: ElementRef;
 
-    _shares: Share[];
+    _shares: Share[] = [];
     @Input() set shares(data: Share[]) {
-        this._shares = data;
-        this.sharesToDisplay = data.sort((a, b) => {
-            const x = a.ticker;
-            const y = b.ticker;
-            return x < y ? -1 : x > y ? 1 : 0;
-        });
+        if (Array.isArray(data)) {
+            this._shares = data;
+            this.sharesToDisplay = [...data].sort((a, b) => {
+                const x = a.ticker;
+                const y = b.ticker;
+                return x < y ? -1 : x > y ? 1 : 0;
+            });
+        } else {
+            this._shares = [];
+            this.sharesToDisplay = [];
+        }
     }
     get shares(): Share[] {
         return this._shares;

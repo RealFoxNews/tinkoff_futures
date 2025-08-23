@@ -24,16 +24,16 @@ export class DropDefaultControlsComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
         if (this.settings && this.exchange) {
             const defaultDiff =
-                this.exchange === 'FORTS_EVENING' ? this.settings.moexDiffShares : this.settings.foreignDiffShares;
+                this.exchange === 'forts_futures_weekend' ? this.settings.moexDiffShares : this.settings.foreignDiffShares;
 
             this.defaulPercentControl.setValue(convertToFrontPersent(defaultDiff));
 
             this.defaultDiffBuyControl.setValue(
-                this.exchange === 'FORTS_EVENING' ? this.settings.moexDiffSharesBuy : this.settings.foreignDiffSharesBuy
+                this.exchange === 'forts_futures_weekend' ? this.settings.moexDiffSharesBuy : this.settings.foreignDiffSharesBuy
             );
 
             this.defaultMoneyControl.setValue(
-                this.exchange === 'FORTS_EVENING' ? this.settings.maxMOEXMoneySize : this.settings.foreignMaxMoneySize
+                this.exchange === 'forts_futures_weekend' ? this.settings.maxMOEXMoneySize : this.settings.foreignMaxMoneySize
             );
         }
     }
@@ -58,7 +58,7 @@ export class DropDefaultControlsComponent implements OnChanges {
     saveDefaulPercentValue() {
         const value = convertToBackPersent(this.defaulPercentControl.value);
 
-        const keyToUpdate = this.exchange === 'FORTS_EVENING' ? 'moexDiffShares' : 'foreignDiffShares';
+        const keyToUpdate = this.exchange === 'forts_futures_weekend' ? 'moexDiffShares' : 'foreignDiffShares';
 
         if (value !== this.settings[keyToUpdate]) {
             this.dropService.patchSettings({ drop: { [keyToUpdate]: value } }).subscribe((data) => {
@@ -70,7 +70,7 @@ export class DropDefaultControlsComponent implements OnChanges {
 
     onDefaultMoneyChange() {
         const { value } = this.defaultMoneyControl;
-        const keyToUpdate = this.exchange === 'FORTS_EVENING' ? 'maxMOEXMoneySize' : 'foreignMaxMoneySize';
+        const keyToUpdate = this.exchange === 'forts_futures_weekend' ? 'maxMOEXMoneySize' : 'foreignMaxMoneySize';
 
         if (value !== this.settings[keyToUpdate]) {
             this.dropService.patchSettings({ drop: { [keyToUpdate]: value } }).subscribe((data) => {
@@ -82,7 +82,7 @@ export class DropDefaultControlsComponent implements OnChanges {
 
     onDefaulDeltaPercentChange() {
         const { value } = this.defaultDiffBuyControl;
-        const keyToUpdate = this.exchange === 'FORTS_EVENING' ? 'moexDiffSharesBuy' : 'foreignDiffSharesBuy';
+        const keyToUpdate = this.exchange === 'forts_futures_weekend' ? 'moexDiffSharesBuy' : 'foreignDiffSharesBuy';
 
         if (value !== this.settings[keyToUpdate]) {
             this.dropService.patchSettings({ drop: { [keyToUpdate]: value } }).subscribe((data) => {

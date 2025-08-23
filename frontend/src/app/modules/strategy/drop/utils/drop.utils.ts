@@ -21,7 +21,7 @@ export const geSharePercentValue = (share: Share, settings: DropSettings): numbe
     return convertToFrontPersent(
         custom?.diffShares
             ? custom.diffShares
-            : share.exchange.includes('FORTS_EVENING')
+            : share.exchange.includes('forts_futures_weekend')
             ? settings.moexDiffShares
             : settings.foreignDiffShares
     );
@@ -32,7 +32,7 @@ export const getShareMoneyValue = (share: Share, settings: DropSettings): number
 
     return custom?.maxMoneySize
         ? custom?.maxMoneySize
-        : share.exchange.includes('FORTS_EVENING')
+        : share.exchange.includes('forts_futures_weekend')
         ? settings.maxMOEXMoneySize
         : settings.foreignMaxMoneySize;
 };
@@ -42,7 +42,7 @@ export const geShareDeltaDiffPercentValue = (share: Share, settings: DropSetting
 
     return custom?.diffSharesBuy
         ? custom.diffSharesBuy
-        : share.exchange.includes('FORTS_EVENING')
+        : share.exchange.includes('forts_futures_weekend')
         ? settings.moexDiffSharesBuy
         : settings.foreignDiffSharesBuy;
 };

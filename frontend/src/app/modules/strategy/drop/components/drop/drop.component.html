@@ -15,10 +15,10 @@
 </div>
 
 <nz-tabset class="tabs">
-    <nz-tab nzTitle="FORTS_EVENING">
+    <nz-tab nzTitle="forts_futures_weekend">
         <drop-shares-table
-            [shares]="shares | shareExchange : 'FORTS_EVENING'"
-            [exchange]="'FORTS_EVENING'"
+            [shares]="shares | shareExchange : 'forts_futures_weekend'"
+            [exchange]="'forts_futures_weekend'"
             [settings]="settings"
             (sharesSettingsChanged)="patchSharesSettings($event)"
             (exceptSettingsChanged)="patchExceptSettings($event)"

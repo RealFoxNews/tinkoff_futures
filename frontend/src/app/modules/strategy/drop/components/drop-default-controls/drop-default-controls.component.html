@@ -47,7 +47,7 @@
     />
 </nz-input-group>
 
-<ng-template #suffixMoney> {{ exchange.includes('FORTS_EVENING') ? '₽' : '$' }}</ng-template>
+<ng-template #suffixMoney> {{ exchange.includes('forts_futures_weekend') ? '₽' : '$' }}</ng-template>
 
 <ng-container *ngIf="exchange === 'SPB'">
     <label

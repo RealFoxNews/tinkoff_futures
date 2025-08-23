@@ -39,6 +39,6 @@ export interface SettingsDropResponse {
 }
 
 export const DropEnabledKeys = {
-    FORTS_EVENING: 'enabledMoex',
+    forts_futures_weekend: 'enabledMoex',
     SPB: 'enabledForeign',
 };
