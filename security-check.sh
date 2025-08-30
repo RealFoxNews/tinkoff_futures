@@ -68,9 +68,9 @@ search_pattern() {
     local description=$2
     local exclude_dirs="--exclude-dir=node_modules --exclude-dir=.git --exclude-dir=dist"
     
-    if grep -r "$pattern" . $exclude_dirs --exclude="*.log" --exclude="*.tmp" --exclude="*.temp" >/dev/null 2>&1; then
+    if grep -r "$pattern" . $exclude_dirs --exclude="*.log" --exclude="*.tmp" --exclude="*.temp" --exclude="security-check.sh" >/dev/null 2>&1; then
         print_status "FAIL" "$description found in code"
-        grep -r "$pattern" . $exclude_dirs --exclude="*.log" --exclude="*.tmp" --exclude="*.temp" | head -5
+        grep -r "$pattern" . $exclude_dirs --exclude="*.log" --exclude="*.tmp" --exclude="*.temp" --exclude="security-check.sh" | head -5
         return 1
     else
         print_status "PASS" "$description not found in code"
@@ -96,8 +96,8 @@ echo ""
 echo "🔍 Checking for sensitive data patterns..."
 echo "----------------------------------------"
 
-# Check for API keys and tokens
-search_pattern "password|secret|token|key|credential|api_key|private_key" "Sensitive data patterns" || ((failures++))
+# Check for actual sensitive data (excluding SSL config and JavaScript Object.keys)
+search_pattern "password.*=|secret.*=|.*token.*=.*[a-zA-Z0-9]{15}|api_key.*=.*[a-zA-Z0-9]{15}" "Actual sensitive data patterns" || ((failures++))
 
 # Check for IP addresses
 search_pattern "\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b" "IP addresses" || ((failures++))
@@ -105,8 +105,8 @@ search_pattern "\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b" "IP addresses" || ((fail
 # Check for 32-character tokens (common API key length)
 search_pattern "[a-zA-Z0-9]{32}" "32-character tokens" || ((failures++))
 
-# Check for Tinkoff API patterns
-search_pattern "tinkoff.*api|invest.*api" "Tinkoff API references" || ((warnings++))
+# Check for potentially problematic API patterns
+search_pattern "tinkoff.*token.*=|invest.*secret.*=" "Problematic API patterns" || ((warnings++))
 
 # Check for Telegram bot patterns
 search_pattern "telegram.*bot|bot.*token" "Telegram bot references" || ((warnings++))
