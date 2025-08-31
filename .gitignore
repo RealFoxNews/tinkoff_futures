@@ -2,7 +2,6 @@
 /frontend/node_modules
 /backend/node_modules
 
-
 # Logs
 logs
 *.log
@@ -35,6 +34,43 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# Security - License files
 /backend/assets/license.dll
 /backend/assets/license_public.pem
 /backend/assets/signature.bin
+
+# Security - Environment files
+.env
+.env.local
+.env.production
+.env.development
+backend/.env
+frontend/.env
+
+# Security - Configuration files with sensitive data
+backend/config.json
+frontend/src/environments/environment.prod.ts
+
+# Security - SSL certificates and keys
+ssl/
+*/ssl/
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# Security - Compiled files that may contain sensitive data
+backend/dist/
+frontend/dist/
+
+# Security - Log files that may contain sensitive data
+backend.log
+frontend.log
+*.log
+
+# Security - Temporary files
+*.tmp
+*.temp
+.cache/
